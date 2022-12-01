@@ -1,0 +1,19 @@
+Package: ssROC
+Title: R function for Semi-Supervised ROC (ssROC) Analysis for Rapid and Reliable Evaluation of Phenotyping Algorithms
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Chuan",
+           family = "Hong",
+           role = c("aut")),
+    person(given = "Jessica",
+           family = "Gronsbell",
+           role = c("aut", "cre"),
+           email = "j.gronsbell@utoronto.ca"))
+           
+Description: The package consists the funciton for a semi-supervised approach (ssROC) for estimation of the receiver operating characteristic (ROC) curve parameters of phenotyping algorithms (e.g., sensitivity, specificity).  Unlike classical supervised ROC estimation that uses only labeled data, ssROC also leverages large volumes of unlabeled data to yield substantially precise estimates (i.e., lower variance) of phenotyping algorithm performance without large amounts of labeled data. 
+
+Imports: MASS, matrixStats
+Depends: R (>= 3.5.0)
+License: GPL-3
+LazyLoad: no
+NeedsCompilation: no
