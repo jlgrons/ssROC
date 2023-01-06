@@ -12,11 +12,11 @@ library(ssROC)
 
 ## Set up parameters.
 n <- 300
-N <- 5000 - 300
+N <- 50000 - 300
 p <- 0.3
 boot <- FALSE
 setting <- 1
-seed <- 1
+seed <- 92047
 
 ## Generate data.
 m2 <- 0.3
@@ -37,6 +37,6 @@ roc.sl <- supervised(St, Yt)
 roc.ssROC <- ssROC(S, Y)
 
 ## Pertubation resampling for standard error estimation.
-roc.sl.pert <- pertubation(nbt =2 0, S_labeled = St,Y_labeled = Yt, S = S, Y =Y , method = "supervised")
-roc.ssROC.per <- pertubation(nbt = 20, S_labeled = St,Y_labeled = Yt, S = S, Y = Y, method = "ssROC")
+roc.sl.pert <- pertubation(nbt = 500, S_labeled = St, Y_labeled = Yt, S = S, Y =Y , method = "supervised")
+roc.ssROC.per <- pertubation(nbt = 500, S_labeled = St, Y_labeled = Yt, S = S, Y = Y, method = "ssROC")
 ```
