@@ -13,10 +13,8 @@ library(ssROC)
 ## Set up parameters.
 n <- 300
 N <- 50000 - 300
-p <- 0.3
-boot <- FALSE
-setting <- 1
-seed <- 92047
+
+set.seed(92047)
 
 ## Generate data.
 m2 <- 0.3
