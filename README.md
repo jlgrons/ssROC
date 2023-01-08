@@ -1,5 +1,5 @@
 # ssROC
-R code R function for Semi-Supervised ROC (ssROC) Analysis for Reliable and Streamlined Evaluation of Phenotyping Algorithms.
+R package for Semi-Supervised ROC (ssROC) Analysis for Reliable and Streamlined Evaluation of Phenotyping Algorithms.
 
 # Installation
 ```{R, eval = FALSE}
