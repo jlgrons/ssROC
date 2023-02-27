@@ -9,8 +9,6 @@
 #' @param W_unlabeled optional vector of weights for unlabeled set
 #' @param fpr_vals desired fpr sequence for output
 #' @param bandwidth bandwidth for smoothing
-#' @param ecdf_transform whether conducting cdf transformation
-#' @importFrom stats ecdf
 #' @export
 #' @return list containing
 #' \itemize{
@@ -20,21 +18,12 @@
 #'   \item `mhat` estimate m
 #' }
 
-ssROC <- function(S_all, Y_all,
+ssROC <- function(S, Y,
                        W_labeled = NULL,
                        W_unlabeled = NULL,
                        fpr_vals = seq(0.01, 0.99, by = 0.01),
-                       bandwidth = NULL,
-                       ecdf_transform = TRUE
+                       bandwidth = NULL
                        ){
-
-
-  if(ecdf_transform){
-
-    ecdf_S <- ecdf(S_all)
-    S <- ecdf_S(S_all)
-
-  }
 
   id_labeled <- which(!is.na(Y))
 
@@ -59,7 +48,9 @@ ssROC <- function(S_all, Y_all,
   }
 
   if(is.null(bandwidth)){
+
     bandwidth <- sd(S_labeled) / (n_labeled^0.45)
+
     }
 
   mhat <- NP.REG(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
@@ -68,7 +59,7 @@ ssROC <- function(S_all, Y_all,
                              fpr_vals = fpr_vals)
 
 
-  return(list(roc = result$roc, auc = result$auc, bandwidth = bandwidth, mhat=mhat))
+  return(result)
 }
 
 

@@ -16,7 +16,7 @@
 pertubation=function(nbt, S_labeled,Y_labeled, S, Y, method){
 res.bt=NULL
 for(ibt in 1:nbt){
-print(ibt)
+#print(ibt)
 ptb_wgt <- 4*rbeta(length(S_labeled), 1/2, 3/2)
 ptb_wgt_unlabeled <- 4*rbeta(sum(is.na(Y)),
                              1/2, 3/2)

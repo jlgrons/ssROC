@@ -28,7 +28,7 @@ get_resamp_sd <- function(num_sims, num_bs_reps, resamps){
     colSds(resamps[(num_bs_reps*(xx-1) + 1):(num_bs_reps*(xx-1) + num_bs_reps), ]))}
 
 ## Helper functions for ROC estimation - These need to be cleaned.
-         
+
 # -----------------------------------------------------------------------------
 # Helper functions for ROC estimation
 # -----------------------------------------------------------------------------
@@ -38,23 +38,23 @@ get_resamp_sd <- function(num_sims, num_bs_reps, resamps){
 #' @param fpr False positive rate
 #' @param p1 Actual postive rate
 #' @param S Actual score
-#' @param S.ini        
-#' @param fpr0 sequennce of fpr        
+#' @param S.ini
+#' @param fpr0 sequennce of fpr
 #'
 #' @output
 #' @return List containing:
 #' \itemize{
 #'   \item `auc`, auc
-#'   \item `cut`, sequence of cut 
+#'   \item `cut`, sequence of cut
 #'   \item `p.pos`, positive rate
 #'   \item `fpr`, False positive rate
 #'   \item `tpr`, True positive rate
 #'   \item `ppv`, Positive predictive value
 #'   \item `npv`, Negative predictive value
-#'   \item `F.score`, F score test's accuracy        
-#' }         
-         
-         
+#'   \item `F.score`, F score test's accuracy
+#' }
+
+
 outpt.FUN = function(tpr, fpr, p1, S, S.ini, fpr0 = seq(0.01, 0.99, by = 0.01)){
   cuts=unique(sort(S))
   p0=1-p1
@@ -71,33 +71,33 @@ outpt.FUN = function(tpr, fpr, p1, S, S.ini, fpr0 = seq(0.01, 0.99, by = 0.01)){
   out
 }
 
-#' inverse logit 
+#' inverse logit
 g.logit = function(xx){exp(xx)/(exp(xx)+1)}
 
 # -----------------------------------------------------------------------------
 # Create VTM
 # -----------------------------------------------------------------------------
 #' Creat VTM
-                           
+
 #' @ param vc vector
 #' @ param dm dimension
 #'
-#' @ return vector transmission matrix                          
-                           
+#' @ return vector transmission matrix
+
 VTM<-function(vc, dm){
   matrix(vc, ncol=length(vc), nrow=dm, byrow=T)
 }
 
 # -----------------------------------------------------------------------------
-# 
+#
 # -----------------------------------------------------------------------------
-#' 
 #'
-#' @param yy          
+#'
+#' @param yy
 #' @param Yi Observed outcome
 #' @param Di Predicted outcome
-#' @param yes,smooth                          
-                                                     
+#' @param yes,smooth
+
 S.FUN <- function(yy,Yi,Di,yes.smooth=F)
 {
   if(yes.smooth){
@@ -110,14 +110,14 @@ S.FUN <- function(yy,Yi,Di,yes.smooth=F)
 
 
 # -----------------------------------------------------------------------------
-# 
+#
 # -----------------------------------------------------------------------------
-#' 
-#' @param yy 
+#'
+#' @param yy
 #' @param FUN relation between yy and Yi
 #' @param Yi Observed outcome
 #' @param Vi target vector
-                           
+
 sum.I <- function(yy,FUN,Yi,Vi=NULL)
   # Vi weight
 {
@@ -134,14 +134,14 @@ sum.I <- function(yy,FUN,Yi,Vi=NULL)
 }
 
 # -----------------------------------------------------------------------------
-# 
+#
 # -----------------------------------------------------------------------------
-#' 
+#'
 #' @param uu set of numerica value speckfying wgere interpolation take place
 #' @param Yi Observed outcome
 #' @param Di Predicted oputcome
-#' @param yes.smooth 
-#'                           
+#' @param yes.smooth
+#'
 #' @return list y
 
 Sinv.FUN <- function(uu,Yi,Di,yes.smooth=F)
@@ -156,9 +156,9 @@ Sinv.FUN <- function(uu,Yi,Di,yes.smooth=F)
 #' AUC function
 #'
 #' @param tpr True positive rate
-#' @param fpr False positive rate  
+#' @param fpr False positive rate
 #'
-#' @return AUC                           
+#' @return AUC
 
 auc.FUN=function(TPR, FPR){
   sens=c(sort(TPR,decreasing=T),0); omspec=c(sort(FPR, decreasing=T),0)
@@ -169,17 +169,17 @@ auc.FUN=function(TPR, FPR){
 }
 
 # -----------------------------------------------------------------------------
-# 
+#
 # -----------------------------------------------------------------------------
 #'
 #'
-#' @param St 
+#' @param St
 #' @param Yt
-#' @param Sv 
-#' @param bw                        
-#' @param Wt 
+#' @param Sv
+#' @param bw
+#' @param Wt
 #' @param kern.mat
-                           
+
 NP.REG <- function(St, Yt, Sv, bw, Wt = NULL, kern.mat=NULL){
   nv <- length(Sv)
   nt <- length(St)
@@ -196,12 +196,12 @@ NP.REG <- function(St, Yt, Sv, bw, Wt = NULL, kern.mat=NULL){
 # -----------------------------------------------------------------------------
 # choosing cut
 # -----------------------------------------------------------------------------
-#'choosing cut   
-#'                                           
+#'choosing cut
+#'
 #' @param roc roc table
 #' @param col.nm quantity of interest char
-#' @param value desired value                                        
-                                           
+#' @param value desired value
+
 newfunction=function(roc,col.nm,value){
   cutoff.line = roc[which.min(abs(roc[,col.nm]-value)), ]
   cutoff = cutoff[cut]
@@ -210,12 +210,12 @@ newfunction=function(roc,col.nm,value){
 # -----------------------------------------------------------------------------
 # choosing cut
 # -----------------------------------------------------------------------------
-#'choosing cut                                            
+#'choosing cut
 
 #' @param roc : num [1:99,1:6] roc table
 #' @param col.nm : quantity of interest char
 #' @param value : real number
-                                           
+
 cutoff.choose=function(roc,col.nm,value){
   roc = data.frame(roc)
   cutoff.line = roc[which.min(abs(roc[,col.nm]-value))[1], ]
@@ -229,57 +229,171 @@ cutoff.choose=function(roc,col.nm,value){
 # Interpolated ROC function used by supervised and ss imp estimators.
 # -----------------------------------------------------------------------------
 #'Interpolated ROC function used by supervised and ss imp estimators.
-#'                                           
+#'
 #' @param S Score
 #' @param Y Outcome
 #' @param w weight vector
 #' @param fpr_vals equennce of fpr
-#'                                           
+#'
 #' @return List containing:
 #' \itemize{
-#'   \item `cut`, sequence of cut 
+#'   \item `cut`, sequence of cut
 #'   \item `p.pos`, positive rate
 #'   \item `fpr`, False positive rate
 #'   \item `tpr`, True positive rate
 #'   \item `ppv`, Positive predictive value
 #'   \item `npv`, Negative predictive value
 #'   \item `F.score`, F score test's accuracy
-#'   \item `auc`, auc                                           
-#' }                                       
-                                           
+#'   \item `auc`, auc
+#' }
+
 interpolated_ROC <- function(S, Y, W = NULL,
                              fpr_vals = seq(0.01, 0.99, by = 0.01)){
-  
+
   cuts <- unique(sort(S))
   nc <- length(cuts)
-  
-  p_pos <- unlist(lapply(1:length(cuts), function(ll) 
+
+  p_pos <- unlist(lapply(1:length(cuts), function(ll)
     sum((S>=cuts[ll]) * W) / sum(W))
   )
-  
+
   TPR_c <- sum.I(cuts, "<=", S, Y * W) / sum(Y * W)
   FPR_c <- sum.I(cuts, "<=", S, (1-Y) * W) / sum((1-Y) * W)
-  
+
   auc <- sum(TPR_c[-1] * (FPR_c[-nc]-FPR_c[-1]))
-  
+
   mu1 <- sum(Y * W) / sum(W)
   mu0 <- 1 - mu1
-  
+
   PPV_c <- (TPR_c * mu1) / (TPR_c * mu1 + FPR_c * mu0)
   NPV_c <- ((1-FPR_c) * mu0) / ((1-FPR_c) * mu0 + (1-TPR_c) * mu1)
-  
+
   fscore_c <- (2 * PPV_c * TPR_c) / (PPV_c + TPR_c)
-  
+
   roc_c <- cbind("cut"= cuts,"p.pos" = p_pos, "FPR"=FPR_c,"TPR"=TPR_c,
                  "PPV"=PPV_c,"NPV"=NPV_c, "F.score" = fscore_c)
-  
+
   roc <- sapply(1:ncol(roc_c), function(kk){approx(roc_c[,"FPR"], roc_c[,kk],
                                                    fpr_vals, rule = 2)$y})
-  colnames(roc) <-colnames(roc_c)
-  
-  return(list(roc = roc, auc = auc))
+
+  roc_all <- cbind(roc, auc)
+  colnames(roc_all) <-c(colnames(roc_c), "AUC")
+
+  return(roc_all)
 }
 
+
+summarize_results <- function(roc_true_all, roc_all, n_sim, roc_val_all = NULL){
+
+  true_vals <- extract_results(roc_true_all)
+  est_vals <- extract_results(roc_all)
+
+  # Compute bias.
+  bias <- round(cbind(seq(0.01, 0.99, by = 0.01) * 100,
+                      my_rowMeans(true_vals$cut_all),
+                      my_rowMeans(est_vals$cut_all -matrix( my_rowMeans(true_vals$cut_all), nrow(true_vals$cut_all), n_sim)),
+                      my_rowMeans(true_vals$ppos_all),
+                      my_rowMeans(est_vals$ppos_all -matrix( my_rowMeans(true_vals$ppos_all), nrow(true_vals$ppos_all), n_sim)),
+                      my_rowMeans(true_vals$tpr_all),
+                      my_rowMeans(est_vals$tpr_all -matrix( my_rowMeans(true_vals$tpr_all), nrow(true_vals$tpr_all), n_sim)),
+                      my_rowMeans(true_vals$ppv_all),
+                      my_rowMeans(est_vals$ppv_all -matrix( my_rowMeans(true_vals$ppv_all), nrow(true_vals$ppv_all), n_sim)),
+                      my_rowMeans(true_vals$npv_all),
+                      my_rowMeans(est_vals$npv_all -matrix( my_rowMeans(true_vals$npv_all), nrow(true_vals$npv_all), n_sim)),
+                      my_rowMeans(true_vals$fscore_all),
+                      my_rowMeans(est_vals$fscore_all -matrix( my_rowMeans(true_vals$fscore_all), nrow(true_vals$fscore_all), n_sim)),
+                      my_rowMeans(true_vals$auc_all),
+                      my_rowMeans(est_vals$auc_all -matrix( my_rowMeans(true_vals$auc_all), nrow(true_vals$auc_all), n_sim))
+  ), 2)
+  colnames(bias) <- c("fpr", "cut", "bias", "ppos", "bias",
+                      "tpr", "bias", "ppv", "bias",
+                      "npv", "bias", "fscore", "bias",
+                      "auc", "bias")
+
+  # Compute standard error.
+  std_error <- round(cbind(seq(0.01, 0.99, by = 0.01) * 100,
+                           my_rowSds(est_vals$cut_all),
+                           my_rowSds(est_vals$ppos_all),
+                           my_rowSds(est_vals$tpr_all),
+                           my_rowSds(est_vals$ppv_all),
+                           my_rowSds(est_vals$npv_all),
+                           my_rowSds(est_vals$fscore_all),
+                           my_rowSds(est_vals$auc_all)
+  ), 3)
+  colnames(std_error) <- c("fpr","cut", "ppos", "tpr",
+                           "ppv", "npv", "fscore", "auc")
+
+  if(!is.null(roc_val_all)){
+
+    val_vals <- extract_results(roc_val_all)
+    std_error_val <- round(cbind(seq(0.01, 0.99, by = 0.01) * 100,
+                                 my_rowSds(val_vals$cut_all),
+                                 my_rowSds(val_vals$ppos_all),
+                                 my_rowSds(val_vals$tpr_all),
+                                 my_rowSds(val_vals$ppv_all),
+                                 my_rowSds(val_vals$npv_all),
+                                 my_rowSds(val_vals$fscore_all),
+                                 my_rowSds(val_vals$auc_all)
+    ), 3)
+
+    bias_val <- round(cbind(my_rowMeans(val_vals$cut_all -matrix( my_rowMeans(true_vals$cut_all), nrow(true_vals$cut_all), n_sim)),
+                            my_rowMeans(val_vals$ppos_all -matrix( my_rowMeans(true_vals$ppos_all), nrow(true_vals$ppos_all), n_sim)),
+                            my_rowMeans(val_vals$tpr_all -matrix( my_rowMeans(true_vals$tpr_all), nrow(true_vals$tpr_all), n_sim)),
+                            my_rowMeans(val_vals$ppv_all -matrix( my_rowMeans(true_vals$ppv_all), nrow(true_vals$ppv_all), n_sim)),
+                            my_rowMeans(val_vals$npv_all -matrix( my_rowMeans(true_vals$npv_all), nrow(true_vals$npv_all), n_sim)),
+                            my_rowMeans(val_vals$fscore_all -matrix( my_rowMeans(true_vals$fscore_all), nrow(true_vals$fscore_all), n_sim)),
+                            my_rowMeans(val_vals$auc_all -matrix( my_rowMeans(true_vals$auc_all), nrow(true_vals$auc_all), n_sim))
+    ), 2)
+
+    bias_rv <- bias[, -c(1, 2, 4, 6, 8, 10, 12, 14)]
+    std_error_rv <- std_error[, -c(1)]
+
+    mse_val <- bias_val^2 + std_error_val[ ,-1]^2
+    mse_est <- bias_rv^2 + std_error_rv^2
+
+    re_int <- mse_val/mse_est
+    re <- cbind(seq(0.01, 0.99, by = 0.01) * 100, re_int)
+    colnames(re) <- c("fpr","cut", "ppos", "tpr",
+                      "ppv", "npv", "fscore", "auc")
+
+  }else{re = NULL}
+
+  return(list(bias = bias, std_error = std_error, re = re))
+}
+
+
+
+extract_results <- function(roc_all, n_sim){
+
+  n_cols <- ncol(roc_all)
+  cut_all <- roc_all[, seq(1, n_cols, by = 8)] * 100
+  ppos_all <- roc_all[, seq(2, n_cols, by = 8)] * 100
+  tpr_all <- roc_all[, seq(4, n_cols, by = 8)] * 100
+  ppv_all <- roc_all[, seq(5, n_cols, by = 8)] * 100
+  npv_all <- roc_all[, seq(6, n_cols, by = 8)] * 100
+  fscore_all <- roc_all[, seq(7, n_cols, by = 8)] * 100
+  auc_all <- roc_all[, seq(8, n_cols, by = 8)] * 100
+
+  return(list(cut_all = cut_all,
+              ppos_all = ppos_all,
+              tpr_all = tpr_all,
+              ppv_all = ppv_all,
+              npv_all = npv_all,
+              fscore_all = fscore_all,
+              auc_all = auc_all))
+}
+
+my_rowMeans <- function(x){
+
+  apply(x, 1, median)
+
+}
+
+my_rowSds <- function(x){
+
+  apply(x, 1, mad)
+
+}
 
 
 
