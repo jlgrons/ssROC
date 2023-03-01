@@ -1,6 +1,7 @@
 # ssROC
 R package for Semi-Supervised ROC (ssROC) Analysis for Reliable and Streamlined Evaluation of Phenotyping Algorithms.
 
+
 # Installation
 ```{R, eval = FALSE}
 devtools::install_github(repo = "https://github.com/jlgrons/ssROC")
@@ -12,7 +13,7 @@ library(ssROC)
 
 ## Set up parameters.
 n <- 300
-N <- 50000 - 300
+N <- 10000 - 300
 
 set.seed(92047)
 
