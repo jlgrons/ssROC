@@ -14,7 +14,6 @@
 #' @param misspeci whether the model is correctly specified
 #' @return a simulated datasets containing outcome Y and phenotyping score for both labeled and unlabele sets
 #' @importFrom stats ecdf
-#' @export
 
 data_generation <- function(n_labeled, N_unlabeled, mean_1, sd_1,
                             mean_2, sd_2, prevalence, setting = 1){

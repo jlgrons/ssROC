@@ -38,10 +38,8 @@ get_resamp_sd <- function(num_sims, num_bs_reps, resamps){
 #' @param fpr False positive rate
 #' @param p1 Actual postive rate
 #' @param S Actual score
-#' @param S.ini
+#' @param S.ini initial score
 #' @param fpr0 sequennce of fpr
-#'
-#' @output
 #' @return List containing:
 #' \itemize{
 #'   \item `auc`, auc
@@ -79,10 +77,10 @@ g.logit = function(xx){exp(xx)/(exp(xx)+1)}
 # -----------------------------------------------------------------------------
 #' Creat VTM
 
-#' @ param vc vector
-#' @ param dm dimension
+#' @param vc vector
+#' @param dm dimension
 #'
-#' @ return vector transmission matrix
+#' @return vector transmission matrix
 
 VTM<-function(vc, dm){
   matrix(vc, ncol=length(vc), nrow=dm, byrow=T)
@@ -93,10 +91,10 @@ VTM<-function(vc, dm){
 # -----------------------------------------------------------------------------
 #'
 #'
-#' @param yy
+#' @param yy value
 #' @param Yi Observed outcome
 #' @param Di Predicted outcome
-#' @param yes,smooth
+#' @param yes.smooth smoothing
 
 S.FUN <- function(yy,Yi,Di,yes.smooth=F)
 {
@@ -113,7 +111,7 @@ S.FUN <- function(yy,Yi,Di,yes.smooth=F)
 #
 # -----------------------------------------------------------------------------
 #'
-#' @param yy
+#' @param yy value
 #' @param FUN relation between yy and Yi
 #' @param Yi Observed outcome
 #' @param Vi target vector
@@ -140,8 +138,7 @@ sum.I <- function(yy,FUN,Yi,Vi=NULL)
 #' @param uu set of numerica value speckfying wgere interpolation take place
 #' @param Yi Observed outcome
 #' @param Di Predicted oputcome
-#' @param yes.smooth
-#'
+#' @param yes.smooth smoothing
 #' @return list y
 
 Sinv.FUN <- function(uu,Yi,Di,yes.smooth=F)
@@ -157,8 +154,7 @@ Sinv.FUN <- function(uu,Yi,Di,yes.smooth=F)
 #'
 #' @param tpr True positive rate
 #' @param fpr False positive rate
-#'
-#' @return AUC
+#' @return AUC AUC
 
 auc.FUN=function(TPR, FPR){
   sens=c(sort(TPR,decreasing=T),0); omspec=c(sort(FPR, decreasing=T),0)
@@ -173,12 +169,7 @@ auc.FUN=function(TPR, FPR){
 # -----------------------------------------------------------------------------
 #'
 #'
-#' @param St
-#' @param Yt
-#' @param Sv
-#' @param bw
-#' @param Wt
-#' @param kern.mat
+
 
 NP.REG <- function(St, Yt, Sv, bw, Wt = NULL, kern.mat=NULL){
   nv <- length(Sv)

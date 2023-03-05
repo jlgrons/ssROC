@@ -9,7 +9,7 @@ nbt <- 2
 m2 <- 0.3
 m1 <- 0.7
 s2 <- 0.2; s1 <- 0.3
-my_data <- data_generation(n, N, m1, s1, m2, s2, p, misspec=F)
+my_data <- data_generation(n, N, m1, s1, m2, s2, p)
 
 Y <- my_data[, 'Y_miss']
 S <- my_data[, 'S']

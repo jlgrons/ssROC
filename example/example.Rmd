@@ -1,0 +1,47 @@
+---
+title: "ssROC example"
+output: html_document
+date: '2023-03-05'
+---
+
+
+## load the package
+
+```{r load}
+library(ssROC)
+```
+
+## load the data
+
+You can also embed plots, for example:
+
+```{r data, echo=FALSE}
+#load(my_data)
+```
+
+## input data format
+
+```{r input, echo=FALSE}
+# Y <- my_data[, 'Y_miss']
+# S <- my_data[, 'S']
+# labeled_ind <- which(!is.na(Y))
+# Yt <- Y[labeled_ind]
+# St <- S[labeled_ind]
+```
+
+## compute the point estimates
+
+```{r estimate, echo=FALSE}
+# roc.sl0 <- supervised(S, my_data[, 'Y'])
+# roc.sl <- supervised(St, Yt)
+# roc.ssROC <- ssROC(S, Y)
+```
+
+## perturbation
+
+```{r perturbation, echo=FALSE}
+# roc.sl.pert=pertubation(nbt=nbt, S_labeled=St,Y_labeled=Yt, S=S, Y=Y, method="supervised")
+# roc.ssROC.pert=pertubation(nbt=nbt, S_labeled=St,Y_labeled=Yt, S=S, Y=Y, method="ssROC")
+```
+
+

@@ -10,6 +10,7 @@
 #' @param fpr_vals desired fpr sequence for output
 #' @param bandwidth bandwidth for smoothing
 #' @export
+#' @importFrom stats approx bw.nrd dnorm ecdf mad median pnorm qnorm quantile rbeta rbinom sd
 #' @return list containing
 #' \itemize{
 #'   \item `roc` roc
