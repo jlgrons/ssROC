@@ -7,9 +7,9 @@
 auc.FUN(TPR, FPR)
 }
 \arguments{
-\item{tpr}{True positive rate}
+\item{TPR}{True positive rate}
 
-\item{fpr}{False positive rate}
+\item{FPR}{False positive rate}
 }
 \value{
 AUC AUC

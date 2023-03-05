@@ -11,9 +11,9 @@ interpolated_ROC(S, Y, W = NULL, fpr_vals = seq(0.01, 0.99, by = 0.01))
 
 \item{Y}{Outcome}
 
-\item{fpr_vals}{equennce of fpr}
+\item{W}{weight vector}
 
-\item{w}{weight vector}
+\item{fpr_vals}{equennce of fpr}
 }
 \value{
 List containing:

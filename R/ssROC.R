@@ -3,8 +3,8 @@
 # -----------------------------------------------------------------------------
 #'
 #' Imputation based semi-supervised method
-#' @param S_all phenotyping score S for all, including labeled and unlabeled set
-#' @param Y_all outcome Y for all, including labeled and unlabeled set; containing Y NA
+#' @param S phenotyping score S for all, including labeled and unlabeled set
+#' @param Y outcome Y for all, including labeled and unlabeled set; containing Y NA
 #' @param W_labeled optional vector of weights for labeled set
 #' @param W_unlabeled optional vector of weights for unlabeled set
 #' @param fpr_vals desired fpr sequence for output

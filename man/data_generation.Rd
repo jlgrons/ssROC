@@ -18,6 +18,8 @@ data_generation(
 \arguments{
 \item{n_labeled}{the size of the labeled set}
 
+\item{N_unlabeled}{the size of the unlabeled set}
+
 \item{mean_1}{mean for controls}
 
 \item{sd_1}{sd for controls}
@@ -28,9 +30,7 @@ data_generation(
 
 \item{prevalence}{prevalence of cases}
 
-\item{N_labeled}{the size of the unlabeled set}
-
-\item{misspeci}{whether the model is correctly specified}
+\item{setting}{equals to 1 if the model is correctly specified, 0 otherwise}
 }
 \value{
 a simulated datasets containing outcome Y and phenotyping score for both labeled and unlabele sets

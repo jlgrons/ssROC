@@ -6,6 +6,9 @@
 \usage{
 g.logit(xx)
 }
+\arguments{
+\item{xx}{value}
+}
 \description{
 inverse logit
 }

@@ -22,10 +22,10 @@ coverage_probability <- function(lower, upper, truth){
   mean(I(upper >= truth)*I(lower <= truth))
 }
 
-
+#' @importFrom proxyC colSds
 get_resamp_sd <- function(num_sims, num_bs_reps, resamps){
   sapply(1:num_sims, function(xx)
-    colSds(resamps[(num_bs_reps*(xx-1) + 1):(num_bs_reps*(xx-1) + num_bs_reps), ]))}
+    proxyC::colSds(resamps[(num_bs_reps*(xx-1) + 1):(num_bs_reps*(xx-1) + num_bs_reps), ]))}
 
 ## Helper functions for ROC estimation - These need to be cleaned.
 
@@ -70,6 +70,7 @@ outpt.FUN = function(tpr, fpr, p1, S, S.ini, fpr0 = seq(0.01, 0.99, by = 0.01)){
 }
 
 #' inverse logit
+#' @param xx value
 g.logit = function(xx){exp(xx)/(exp(xx)+1)}
 
 # -----------------------------------------------------------------------------
@@ -95,7 +96,6 @@ VTM<-function(vc, dm){
 #' @param Yi Observed outcome
 #' @param Di Predicted outcome
 #' @param yes.smooth smoothing
-
 S.FUN <- function(yy,Yi,Di,yes.smooth=F)
 {
   if(yes.smooth){
@@ -152,10 +152,9 @@ Sinv.FUN <- function(uu,Yi,Di,yes.smooth=F)
 # -----------------------------------------------------------------------------
 #' AUC function
 #'
-#' @param tpr True positive rate
-#' @param fpr False positive rate
+#' @param TPR True positive rate
+#' @param FPR False positive rate
 #' @return AUC AUC
-
 auc.FUN=function(TPR, FPR){
   sens=c(sort(TPR,decreasing=T),0); omspec=c(sort(FPR, decreasing=T),0)
   height = (sens[-1]+sens[-length(sens)])/2
@@ -223,7 +222,7 @@ cutoff.choose=function(roc,col.nm,value){
 #'
 #' @param S Score
 #' @param Y Outcome
-#' @param w weight vector
+#' @param W weight vector
 #' @param fpr_vals equennce of fpr
 #'
 #' @return List containing:
@@ -237,7 +236,6 @@ cutoff.choose=function(roc,col.nm,value){
 #'   \item `F.score`, F score test's accuracy
 #'   \item `auc`, auc
 #' }
-
 interpolated_ROC <- function(S, Y, W = NULL,
                              fpr_vals = seq(0.01, 0.99, by = 0.01)){
 

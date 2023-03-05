@@ -14,6 +14,10 @@ ssROC(
 )
 }
 \arguments{
+\item{S}{phenotyping score S for all, including labeled and unlabeled set}
+
+\item{Y}{outcome Y for all, including labeled and unlabeled set; containing Y NA}
+
 \item{W_labeled}{optional vector of weights for labeled set}
 
 \item{W_unlabeled}{optional vector of weights for unlabeled set}
@@ -21,10 +25,6 @@ ssROC(
 \item{fpr_vals}{desired fpr sequence for output}
 
 \item{bandwidth}{bandwidth for smoothing}
-
-\item{S_all}{phenotyping score S for all, including labeled and unlabeled set}
-
-\item{Y_all}{outcome Y for all, including labeled and unlabeled set; containing Y NA}
 }
 \value{
 list containing

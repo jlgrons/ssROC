@@ -3,6 +3,8 @@
 export(pertubation)
 export(ssROC)
 export(supervised)
+importFrom(MASS,mvrnorm)
+importFrom(proxyC,colSds)
 importFrom(stats,approx)
 importFrom(stats,bw.nrd)
 importFrom(stats,dnorm)
