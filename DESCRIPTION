@@ -2,10 +2,7 @@ Package: ssROC
 Title: R function for Semi-Supervised ROC (ssROC) Analysis for Rapid and Reliable Evaluation of Phenotyping Algorithms
 Version: 0.0.1
 Authors@R: 
-    c(person(given = "Chuan",
-           family = "Hong",
-           role = c("aut")),
-    person(given = "Jessica",
+    c(person(given = "Jessica",
            family = "Gronsbell",
            role = c("aut", "cre"),
            email = "j.gronsbell@utoronto.ca"))
