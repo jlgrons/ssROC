@@ -13,8 +13,6 @@ library(ssROC)
 
 ## load the data
 
-You can also embed plots, for example:
-
 ```{r data, echo=FALSE}
 # data(my_data)
 ```

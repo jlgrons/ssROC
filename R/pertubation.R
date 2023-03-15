@@ -27,8 +27,7 @@ pertubation=function(nbt, S_labeled,Y_labeled, S, Y, method){
                                                         W_unlabeled = ptb_wgt_unlabeled),
                                                   error=function(e) NA)
     
-    res.bt[[ibt]]=tryCatch(res.bt[[ibt]][setdiff(ls(res.bt[[ibt]]), "mhat")],
-                           error=function(e) NA)
+    #res.bt[[ibt]]=tryCatch(res.bt[[ibt]][setdiff(ls(res.bt[[ibt]]), "mhat")],error=function(e) NA)
     }
   }
   res.bt
