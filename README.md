@@ -33,6 +33,6 @@ roc.sl <- supervised(St, Yt)
 roc.ssROC <- ssROC(S, Y)
 
 ## Pertubation resampling for standard error estimation.
-roc.sl.pert <- pertubation(nbt = 500, S_labeled = St, Y_labeled = Yt, S = S, Y =Y , method = "supervised")
-roc.ssROC.pert <- pertubation(nbt = 500, S_labeled = St, Y_labeled = Yt, S = S, Y = Y, method = "ssROC")
+roc.sl.pert <- pertubation(nbt = 5, S_labeled = St, Y_labeled = Yt, S = S, Y =Y , method = "supervised")
+roc.ssROC.pert <- pertubation(nbt = 5, S_labeled = St, Y_labeled = Yt, S = S, Y = Y, method = "ssROC")
 ```
