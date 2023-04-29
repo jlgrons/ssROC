@@ -21,12 +21,12 @@ data_generation <- function(n_labeled, N_unlabeled,setting = 1){
     p <- 10
     rho <- 0.2
     Sigma0 <- 3*(rho+(1-rho)*diag(p));
-    b0 <- c(-2, 0, 0, 0.2, 0.2, rep(0, p - 4))
-
+    b0 <- c(-2, 0.1, 0.1, 0.2, -0.2, rep(0, p - 4))
+    
     X <- mvrnorm(N_total, rep(0,10), Sigma0) + rbinom(N_total, 3, 0.3)
-    Y <- rbinom(N_total, 1, expit(cbind(1, X, X[,3]*X[,4]) %*% c(b0, 1)))
+    Y <- rbinom(N_total, 1, expit(cbind(1, X, X[,3]*X[,4]) %*% c(b0, 0.1)))
     S <- expit(cbind(1, X) %*% b0)
-
+    
     ecdf_S <- ecdf(S)
     S <- ecdf_S(S)
 
