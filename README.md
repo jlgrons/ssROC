@@ -21,9 +21,7 @@ setting <- 2
 set.seed(92047)
 
 # Data genetation
-my_data <- data_generation(n_labeled,
-                           N_unlabeled,
-                           setting = setting)
+my_data <- data_generation(n_labeled, N_unlabeled, setting = setting)
 
 Y <- my_data[, 'Y_miss']
 S <- my_data[, 'S']
