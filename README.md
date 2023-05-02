@@ -1,9 +1,10 @@
 # ssROC
+
 R package for Semi-Supervised ROC (ssROC) Analysis for Reliable and Streamlined Evaluation of Phenotyping Algorithms.
 
-# Note: This used an old version of the code.
 
 # Installation
+
 ```{R, eval = FALSE}
 devtools::install_github(repo = "https://github.com/jlgrons/ssROC")
 ```
@@ -13,26 +14,37 @@ devtools::install_github(repo = "https://github.com/jlgrons/ssROC")
 library(ssROC)
 
 ## Set up parameters.
-n <- 300
-N <- 10000 - 300
+n_labeled <- 200
+N_labeled <- 10000
+setting <- 2
 
 set.seed(92047)
 
-## Generate data.
-my_data <- data_generation(n, N, setting = 1)
+# Data genetation
+my_data <- data_generation(n_labeled,
+                           N_unlabeled,
+                           setting = setting)
 
 Y <- my_data[, 'Y_miss']
 S <- my_data[, 'S']
+
 labeled_ind <- which(!is.na(Y))
-Yt <- Y[labeled_ind]
-St <- S[labeled_ind]
+Y_labeled <- Y[labeled_ind]
+S_labeled <- S[labeled_ind]
 
-## Point estimates.
-roc.sl0 <- supervised(S, my_data[, 'Y'])
-roc.sl <- supervised(St, Yt)
-roc.ssROC <- ssROC(S, Y)
+# Point estimates.
 
-## Pertubation resampling for standard error estimation.
-roc.sl.pert <- pertubation(nbt = 5, S_labeled = St, Y_labeled = Yt, S = S, Y =Y , method = "supervised")
-roc.ssROC.pert <- pertubation(nbt = 5, S_labeled = St, Y_labeled = Yt, S = S, Y = Y, method = "ssROC")
+roc_oracle <- supervised(S, my_data[, 'Y'])
+roc_sl <- supervised(S_labeled, Y_labeled)
+roc_ss <- ssROC(S, Y)
+
+roc_oracle_all <- cbind(roc_oracle_all,  roc_oracle)
+roc_sl_all <- cbind(roc_sl_all,  roc_sl)
+roc_ss_all <- cbind(roc_ss_all,  roc_ss)
+
+# Perturbation.
+
+nbt <- 2 # set small for example.
+roc_sl_pert <- pertubation(nbt, S_labeled, Y_labeled, S, Y, "supervised")
+roc_ssl_pert <- pertubation(nbt, S_labeled, Y_labeled, S, Y, "ssROC")
 ```
