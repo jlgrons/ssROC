@@ -15,7 +15,7 @@ library(ssROC)
 
 ## Set up parameters.
 n_labeled <- 200
-N_labeled <- 10000
+N_unlabeled <- 10000
 setting <- 2
 
 set.seed(92047)
