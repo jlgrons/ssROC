@@ -38,9 +38,6 @@ roc_oracle <- supervised(S, my_data[, 'Y'])
 roc_sl <- supervised(S_labeled, Y_labeled)
 roc_ss <- ssROC(S, Y)
 
-roc_oracle_all <- cbind(roc_oracle_all,  roc_oracle)
-roc_sl_all <- cbind(roc_sl_all,  roc_sl)
-roc_ss_all <- cbind(roc_ss_all,  roc_ss)
 
 # Perturbation.
 
