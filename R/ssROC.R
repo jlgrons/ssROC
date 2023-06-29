@@ -54,6 +54,7 @@ ssROC <- function(S, Y,
     }
 
   mhat <- NP.REG(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
+  # change function name to be consistent in package
 
   result <- interpolated_ROC(S = S_unlabeled, Y = mhat, W = W_unlabeled,
                              fpr_vals = fpr_vals)

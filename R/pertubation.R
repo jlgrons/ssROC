@@ -1,3 +1,5 @@
+# perturbation is spelled incorrection - update throughout
+
 # -----------------------------------------------------------------------------
 # Pertubation bootstrap for standard errors
 # -----------------------------------------------------------------------------
@@ -12,6 +14,8 @@
 #' @param method validation methods, choosing from supervised and ssROC
 #' @return List containing AUC and ROC estimates for each perbutation bootstrap
 #' @export
+
+# Clean this function.
 
 pertubation=function(nbt, S_labeled,Y_labeled, S, Y, method){
 res.bt=NULL

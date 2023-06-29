@@ -1,5 +1,7 @@
 ## Confidence Interval and Coverage Probability Functions
 
+# format like the rest of the functions and clean the functions and file:
+# eg. code format, function names, etc.
 
 logit = function(x){log(x/(1-x))}
 
@@ -282,6 +284,8 @@ interpolated_ROC <- function(S, Y, W = NULL,
   return(roc_all)
 }
 
+# Only keep functions for analysis - I think this only needed to summarize simulation
+# so it doesnt need to be included.
 
 summarize_results <- function(roc_true_all, roc_all, n_sim, roc_val_all = NULL){
 
