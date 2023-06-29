@@ -272,6 +272,7 @@ interpolated_ROC <- function(S, Y, W = NULL,
 
   fscore_c <- (2 * PPV_c * TPR_c) / (PPV_c + TPR_c)
 
+    # only include metrics in the paper
   roc_c <- cbind("cut"= cuts,"p.pos" = p_pos, "FPR"=FPR_c,"TPR"=TPR_c,
                  "PPV"=PPV_c,"NPV"=NPV_c, "F.score" = fscore_c)
 
