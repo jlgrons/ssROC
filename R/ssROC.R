@@ -3,28 +3,20 @@
 # -----------------------------------------------------------------------------
 #'
 #' Imputation based semi-supervised method
-#' @param S_all phenotyping score S for all, including labeled and unlabeled set
-#' @param Y_all outcome Y for all, including labeled and unlabeled set; containing Y NA
+#' @param S phenotyping score S for all, including labeled and unlabeled set
+#' @param Y outcome Y for all, including labeled and unlabeled set; containing Y NA
 #' @param W_labeled optional vector of weights for labeled set
 #' @param W_unlabeled optional vector of weights for unlabeled set
 #' @param fpr_vals desired fpr sequence for output
 #' @param bandwidth bandwidth for smoothing
+#' @return matrix containing ssROC estimates at fpr_vals
 #' @export
-#' @return list containing
-#' \itemize{
-#'   \item `roc` roc
-#'   \item `auc` auc
-#'   \item `bandwidth` bandwidth for smoothing
-#'   \item `mhat` estimate m
-#' }
 
 ssROC <- function(S, Y,
-                       W_labeled = NULL,
-                       W_unlabeled = NULL,
-                       fpr_vals = seq(0.01, 0.99, by = 0.01),
-                       bandwidth = NULL
-                       ){
-
+                  W_labeled = NULL,
+                  W_unlabeled = NULL,
+                  fpr_vals = seq(0.01, 0.99, by = 0.01),
+                  bandwidth = NULL) {
   id_labeled <- which(!is.na(Y))
 
   Y_labeled <- Y[id_labeled]
@@ -35,32 +27,23 @@ ssROC <- function(S, Y,
   N_unlabeled <- length(S_unlabeled)
   n_labeled <- length(Y_labeled)
 
-  if(is.null(W_labeled)){
-
+  if (is.null(W_labeled)) {
     W_labeled <- rep(1, n_labeled)
-
   }
 
-  if(is.null(W_unlabeled)){
-
+  if (is.null(W_unlabeled)) {
     W_unlabeled <- rep(1, N_unlabeled)
-
   }
 
-  if(is.null(bandwidth)){
-
+  if (is.null(bandwidth)) {
     bandwidth <- sd(S_labeled) / (n_labeled^0.45)
+  }
 
-    }
+  mhat <- npreg(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
 
-  mhat <- NP.REG(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
-  # change function name to be consistent in package
-
-  result <- interpolated_ROC(S = S_unlabeled, Y = mhat, W = W_unlabeled,
-                             fpr_vals = fpr_vals)
-
+  result <- roc(
+    S = S_unlabeled, Y = mhat, W = W_unlabeled, fpr_vals = fpr_vals
+  )
 
   return(result)
 }
-
-

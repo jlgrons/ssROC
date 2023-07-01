@@ -21,6 +21,7 @@ setting <- 2
 set.seed(92047)
 
 # Data genetation
+
 my_data <- data_generation(n_labeled, N_unlabeled, setting = setting)
 
 Y <- my_data[, 'Y_miss']
@@ -32,14 +33,18 @@ S_labeled <- S[labeled_ind]
 
 # Point estimates.
 
-roc_oracle <- supervised(S, my_data[, 'Y'])
-roc_sl <- supervised(S_labeled, Y_labeled)
+roc_oracle <- supROC(S_labeled = S, Y_labeled = my_data[, "Y"])
+roc_sl <- supROC(S_labeled = S_labeled, Y_labeled = Y_labeled)
 roc_ss <- ssROC(S, Y)
 
 
 # Perturbation.
 
-nbt <- 2 # set small for example.
-roc_sl_pert <- pertubation(nbt, S_labeled, Y_labeled, S, Y, "supervised")
-roc_ssl_pert <- pertubation(nbt, S_labeled, Y_labeled, S, Y, "ssROC")
+nbt <- 10 # set small for example.
+roc_sl_pert <- pertubation(nbt, S, Y, "supROC")
+roc_ssl_pert <- pertubation(nbt, S, Y, "ssROC")
+
+# Relative Efficiency
+
+re(roc_sl_pert, roc_ssl_pert, fpr_threshold = 0.1)
 ```
