@@ -41,8 +41,8 @@ roc_ss <- ssROC(S, Y)
 # Perturbation.
 
 nbt <- 10 # set small for example.
-roc_sl_pert <- pertubation(nbt, S, Y, "supROC")
-roc_ssl_pert <- pertubation(nbt, S, Y, "ssROC")
+roc_sl_pert <- perturbation(nbt, S, Y, "supROC")
+roc_ssl_pert <- perturbation(nbt, S, Y, "ssROC")
 
 # Relative Efficiency
 
