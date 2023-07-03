@@ -18,14 +18,14 @@ data_generation <- function(n_labeled, N_unlabeled, setting = 1) {
   if (setting == 1) {
     # low AUC
     S <- expit(
-      Y * (rnorm(N_total, 0, 0.5) + rbinom(N_total, 2, 0.3)) +
-        ((1 - Y) * rnorm(N_total, 0, 0.5) + rbinom(N_total, 1, 0.3))
+      Y * (rnorm(N_total, 0.15, 0.25) + rbinom(N_total, 1, 0.3)) +
+        ((1 - Y) * rnorm(N_total, 0, 0.25) + rbinom(N_total, 1, 0.1))
     )
   } else if (setting == 2) {
     # high AUC
     S <- expit(
-      Y * (rnorm(N_total, 0.15, .25) + rbinom(N_total, 1, 0.3)) +
-        (1 - Y) * (rnorm(N_total, 0, 0.25) + rbinom(N_total, 1, 0.1))
+      Y * (rnorm(N_total, 1, 0.5) + rbinom(N_total, 1, 0.3)) +
+        (1 - Y) * (rnorm(N_total, -0.7, 0.5) + rbinom(N_total, 1, 0.3))
     )
   }
 
