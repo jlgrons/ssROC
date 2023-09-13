@@ -24,6 +24,11 @@ ssROC <- function(S, Y,
   S_labeled <- S[id_labeled]
   S_unlabeled <- S[-id_labeled]
 
+  ecdf_S <- stats::ecdf(S)
+  Strans <- ecdf_S(S)
+  Strans_labeled <- Strans[id_labeled]
+  Strans_unlabeled <- Strans[-id_labeled]
+
   N_unlabeled <- length(S_unlabeled)
   n_labeled <- length(Y_labeled)
 
@@ -36,10 +41,10 @@ ssROC <- function(S, Y,
   }
 
   if (is.null(bandwidth)) {
-    bandwidth <- sd(S_labeled) / (n_labeled^0.45)
+    bandwidth <- sqrt(Hmisc::wtd.var(Strans_labeled, W_labeled)) / (n_labeled^0.45)
   }
 
-  mhat <- npreg(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
+  mhat <- npreg(Strans_labeled, Y_labeled, Strans_unlabeled, bandwidth, Wt = W_labeled)
 
   result <- roc(
     S = S_unlabeled, Y = mhat, W = W_unlabeled, fpr_vals = fpr_vals
