@@ -27,9 +27,8 @@ perturbation <- function(nbt, S, Y, method) {
         error = function(e) NA
       )
     } else if (method == "ssROC") {
-      ptb_wgt_unlabeled <- 4 * rbeta(sum(is.na(Y)), 1 / 2, 3 / 2)
       res_bt[[ibt]] <- tryCatch(
-        ssROC(S, Y, W_labeled = ptb_wgt, W_unlabeled = ptb_wgt_unlabeled),
+        ssROC(S, Y, W_labeled = ptb_wgt,
         error = function(e) NA
       )
     }
