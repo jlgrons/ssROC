@@ -9,6 +9,7 @@
 #' @param W_unlabeled optional vector of weights for unlabeled set
 #' @param fpr_vals desired fpr sequence for output
 #' @param bandwidth bandwidth for smoothing
+#' @param transform_score Whether to use ecdf to transform score
 #' @return matrix containing ssROC estimates at fpr_vals
 #' @export
 
@@ -16,18 +17,19 @@ ssROC <- function(S, Y,
                   W_labeled = NULL,
                   W_unlabeled = NULL,
                   fpr_vals = seq(0.01, 0.99, by = 0.01),
-                  bandwidth = NULL) {
+                  bandwidth = NULL,
+                  transform_score = TRUE) {
   id_labeled <- which(!is.na(Y))
 
   Y_labeled <- Y[id_labeled]
 
+  if(transform_score = TRUE){
+    ecdf_S <- stats::ecdf(S)
+    S <- ecdf_S(S)
+  }
+
   S_labeled <- S[id_labeled]
   S_unlabeled <- S[-id_labeled]
-
-  ecdf_S <- stats::ecdf(S)
-  Strans <- ecdf_S(S)
-  Strans_labeled <- Strans[id_labeled]
-  Strans_unlabeled <- Strans[-id_labeled]
 
   N_unlabeled <- length(S_unlabeled)
   n_labeled <- length(Y_labeled)
@@ -41,10 +43,10 @@ ssROC <- function(S, Y,
   }
 
   if (is.null(bandwidth)) {
-    bandwidth <- sqrt(Hmisc::wtd.var(Strans_labeled, W_labeled)) / (n_labeled^0.45)
+    bandwidth <- sqrt(Hmisc::wtd.var(S_labeled, W_labeled)) / (n_labeled^0.45)
   }
 
-  mhat <- npreg(Strans_labeled, Y_labeled, Strans_unlabeled, bandwidth, Wt = W_labeled)
+  mhat <- npreg(S_labeled, Y_labeled, S_unlabeled, bandwidth, Wt = W_labeled)
 
   result <- roc(
     S = S_unlabeled, Y = mhat, W = W_unlabeled, fpr_vals = fpr_vals
