@@ -23,7 +23,7 @@ ssROC <- function(S, Y,
 
   Y_labeled <- Y[id_labeled]
 
-  if(transform_score = TRUE){
+  if(transform_score){
     ecdf_S <- stats::ecdf(S)
     S <- ecdf_S(S)
   }
