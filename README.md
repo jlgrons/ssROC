@@ -16,7 +16,7 @@ library(ssROC)
 ## Set up parameters.
 n_labeled <- 200
 N_unlabeled <- 10000
-setting <- 2
+setting <- "calibrated_highauc"
 
 set.seed(92047)
 
