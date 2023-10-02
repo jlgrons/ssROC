@@ -97,12 +97,12 @@ roc <- function(S, Y, W = NULL, fpr_vals = seq(0.01, 0.99, by = 0.01)) {
     "PPV" = PPV_c, "NPV" = NPV_c
   )
 
-  roc <- sapply(1:ncol(roc_c), function(kk) {
+  suppressWarnings(roc <- sapply(1:ncol(roc_c), function(kk) {
     approx(roc_c[, "FPR"], roc_c[, kk],
       fpr_vals,
       rule = 2
     )$y
-  })
+  }))
 
   roc_all <- cbind(roc, auc)
   colnames(roc_all) <- c(colnames(roc_c), "AUC")
